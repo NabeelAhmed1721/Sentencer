@@ -12,6 +12,7 @@
   "dependencies": {
     "@geist-ui/react": "^2.1.0-canary.0",
     "@geist-ui/react-icons": "^1.0.0",
+    "mnemonic-id": "^3.2.7",
     "next": "9.5.4",
     "psl": "^1.8.0",
     "react": "16.13.1",

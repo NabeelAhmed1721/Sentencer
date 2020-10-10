@@ -3,6 +3,8 @@ import { Page, Input, Button, Spacer, useToasts } from '@geist-ui/react'
 import styles from '../styles/Index.module.css'
 import { useState } from 'react'
 import password from '../lib/password'
+import * as Icon from '@geist-ui/react-icons'
+import lazy from '../lib/lazy'
 
 export default function Index() {
 
@@ -73,6 +75,16 @@ export default function Index() {
     return !!pattern.test(value)
   }
 
+  const handleLazy = () => {
+    setSentence(lazy())
+  }
+
+  const handleClipboard = () => {
+    navigator.clipboard.writeText(output).then(() => {
+      setToasts({type:'success', text:'Successfully Copied!'})
+    })
+  }
+
   return (
     <Page size="mini">
       <Head>
@@ -101,20 +113,20 @@ export default function Index() {
           className={styles.input}
         />
         <div className={styles.buttonContainer}>
-          <Button onClick={handleSubmit} className={styles.primaryButton} type="default">Submit</Button>
-          <Button className={styles.secondaryButton} type="secondary">I'm feeling lazy...</Button>
+          <Button icon={<Icon.Upload />} onClick={handleSubmit} className={styles.primaryButton} type="default">Submit</Button>
+          <Button icon={<Icon.Star />} auto onClick={handleLazy} className={styles.secondaryButton} type="secondary">I'm feeling lazy...</Button>
         </div>
         <Spacer y={3} />
         <h3>Output: </h3>
         <Input value={output} readOnly width="100%" placeholder="Result..." className={styles.primaryInput} />
         <div className={styles.buttonContainer}>
-          <Button className={styles.primaryButton} type="default">Copy to Clipboard</Button>
+          <Button icon={<Icon.Clipboard />} auto onClick={handleClipboard} className={styles.primaryButton} type="default">Copy to Clipboard</Button>
         </div>
         <Spacer y={3} />
         <h3>Integrity Test: </h3>
         <Input value={output} readOnly width="100%" placeholder="Result..." className={styles.primaryInput} />
         <div className={styles.buttonContainer}>
-          <Button className={styles.primaryButton} type="default">Run Test</Button>
+          <Button icon={<Icon.Zap />} className={styles.primaryButton} type="default">Run Test</Button>
         </div>
       </div>
     </Page>
