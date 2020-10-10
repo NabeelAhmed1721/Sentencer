@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Page, Input, Button, Spacer, useToasts } from '@geist-ui/react'
+import { Page, Input, Button, Spacer, useToasts, Card, ButtonDropdown } from '@geist-ui/react'
 import styles from '../styles/Index.module.css'
 import { useState } from 'react'
 import password from '../lib/password'
@@ -15,6 +15,7 @@ export default function Index() {
   const [sentenceState, setSentenceState] = useState('default')
 
   const [output, setOutput] = useState('')
+  const [integrity, setIntegrity] = useState('')
 
   const [toasts, setToasts] = useToasts()
 
@@ -90,6 +91,22 @@ export default function Index() {
     
   }
 
+  const handleCopy = () => {
+    if (output) {
+      setIntegrity(output)
+    } else {
+      setToasts({type:'warning', text:'Nothing to Copy!'})
+    }
+  }
+
+  const handleIntegrity = (useGPU) => {
+    if (integrity) {
+
+    } else {
+      setToasts({type:'warning', text:'Nothing to Test!'})
+    }
+  }
+
   return (
     <Page size="mini">
       <Head>
@@ -129,10 +146,18 @@ export default function Index() {
         </div>
         <Spacer y={3} />
         <h3>Integrity Test: </h3>
-        <Input value={output} readOnly width="100%" placeholder="Result..." className={styles.primaryInput} />
+        <Input type="password" value={integrity} onChange={evt => setIntegrity(evt.target.value)} width="100%" placeholder="Result..." className={styles.primaryInput} />
         <div className={styles.buttonContainer}>
-          <Button icon={<Icon.Zap />} className={styles.primaryButton} type="default">Run Test</Button>
+          <Button icon={<Icon.Copy />} auto className={styles.primaryButton} onClick={handleCopy} type="default">Copy from Result</Button>
+          <ButtonDropdown type="secondary" className={styles.secondaryButton} >
+            <ButtonDropdown.Item main onClick={() => handleIntegrity(false)}>Run Test</ButtonDropdown.Item>
+            <ButtonDropdown.Item onClick={() => handleIntegrity(true)} type="secondary" >Run Test with GPU</ButtonDropdown.Item>
+          </ButtonDropdown>
         </div>
+        <Spacer y={2} />
+        <Card>
+          <h4>Results: </h4>
+        </Card>
       </div>
     </Page>
   )
