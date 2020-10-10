@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { Page, Input, Button, Spacer, useToasts } from '@geist-ui/react'
 import styles from '../styles/Index.module.css'
 import { useState } from 'react'
+import password from '../lib/password'
 
 export default function Index() {
 
@@ -11,11 +12,16 @@ export default function Index() {
   const [sentence, setSentence] = useState('')
   const [sentenceState, setSentenceState] = useState('default')
 
+  const [output, setOutput] = useState('')
+
   const [toasts, setToasts] = useToasts()
 
   const handleSubmit = () => {
     if(!validate()) {
-
+      setOutput(password({
+        sentence,
+        domain
+    }))
     }
   }
 
@@ -38,6 +44,14 @@ export default function Index() {
       setToasts({type:'error', text:'No domain provided!'})
     }
 
+    if(errorFound) return errorFound
+
+    if(!validUrl(domain)) {
+      createError(setDomainState, 'error')
+      setToasts({type:'error', text:'Domain URL not valid!'})
+      errorFound = true
+    }
+
 
     return errorFound
   }
@@ -47,6 +61,16 @@ export default function Index() {
     setTimeout(() => {
       state('default')
     }, 2000)
+  }
+
+  const validUrl = value => {
+    var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+          '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+          '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+          '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+          '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+          '(\\#[-a-z\\d_]*)?$', 'i') // fragment locator
+    return !!pattern.test(value)
   }
 
   return (
@@ -80,11 +104,17 @@ export default function Index() {
           <Button onClick={handleSubmit} className={styles.primaryButton} type="default">Submit</Button>
           <Button className={styles.secondaryButton} type="secondary">I'm feeling lazy...</Button>
         </div>
-        <Spacer y={5} />
-        <h3>Input: </h3>
-        <Input readOnly width="100%" placeholder="Result..." className={styles.input} />
+        <Spacer y={3} />
+        <h3>Output: </h3>
+        <Input value={output} readOnly width="100%" placeholder="Result..." className={styles.primaryInput} />
         <div className={styles.buttonContainer}>
           <Button className={styles.primaryButton} type="default">Copy to Clipboard</Button>
+        </div>
+        <Spacer y={3} />
+        <h3>Integrity Test: </h3>
+        <Input value={output} readOnly width="100%" placeholder="Result..." className={styles.primaryInput} />
+        <div className={styles.buttonContainer}>
+          <Button className={styles.primaryButton} type="default">Run Test</Button>
         </div>
       </div>
     </Page>
