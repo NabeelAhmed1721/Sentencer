@@ -1,0 +1,19 @@
+{
+  "name": "sentencer",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "deploy": "yarn export && npx surge --domain `cat CNAME` dist",
+    "export": "yarn build && next export -o dist"
+  },
+  "dependencies": {
+    "@geist-ui/react": "^2.1.0-canary.0",
+    "@geist-ui/react-icons": "^1.0.0",
+    "next": "9.5.4",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  }
+}

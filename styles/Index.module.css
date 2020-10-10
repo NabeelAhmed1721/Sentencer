@@ -1,0 +1,45 @@
+.pageHeader {
+    text-align: center;
+}
+
+.pageBody {
+    margin-top: 56px;
+}
+
+.primaryInput {
+    margin-bottom: 14px;
+}
+
+.input {
+    margin-bottom: 28px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.primaryButton {
+    margin-right: 28px;
+}
+
+@media only screen and (max-width: 512px) {
+    .buttonContainer {
+      flex-direction: column;
+    }
+    .primaryButton {
+        margin-bottom: 14px;
+        margin-right: 28px;
+        margin-left: 28px;
+    }
+    .secondaryButton {
+        margin-right: 28px;
+        margin-left: 28px;
+    }
+    .pageTitle {
+        font-size: 28px;
+    }
+    .pageDesc {
+        font-size: 12px;
+    }
+  }
