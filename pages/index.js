@@ -80,9 +80,14 @@ export default function Index() {
   }
 
   const handleClipboard = () => {
-    navigator.clipboard.writeText(output).then(() => {
-      setToasts({type:'success', text:'Successfully Copied!'})
-    })
+    if(output) {
+      navigator.clipboard.writeText(output).then(() => {
+        setToasts({type:'success', text:'Successfully Copied!'})
+      })  
+    } else {
+      setToasts({type:'warning', text:'Nothing to Copy!'})
+    }
+    
   }
 
   return (
