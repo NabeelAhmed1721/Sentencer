@@ -103,7 +103,7 @@ export default function Index() {
 
   const handleIntegrity = () => {
     if (integrity) {
-      console.log(integrityValidate(output))
+      console.log(integrityValidate(integrity))
     } else {
       setToasts({type:'warning', text:'Nothing to Test!'})
     }
@@ -158,7 +158,7 @@ export default function Index() {
         />
         <div className={styles.buttonContainer}>
           <Button icon={<Icon.Copy />} auto className={styles.primaryButton} onClick={handleCopy} type="default">Copy from Result</Button>
-          <Button icon={<Icon.Zap />} onClick={handleIntegrity} type="secondary">Run Test</Button>
+          <Button icon={<Icon.Zap />} className={styles.secondaryButton} onClick={handleIntegrity} type="secondary">Run Test</Button>
         </div>
         <Spacer y={2} />
         <Card>
