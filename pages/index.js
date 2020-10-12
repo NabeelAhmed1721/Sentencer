@@ -2,9 +2,10 @@ import Head from 'next/head'
 import { Page, Input, Button, Spacer, useToasts, Card, ButtonDropdown } from '@geist-ui/react'
 import styles from '../styles/Index.module.css'
 import { useState } from 'react'
-import password from '../lib/password'
 import * as Icon from '@geist-ui/react-icons'
+import password from '../lib/password'
 import lazy from '../lib/lazy'
+import integrityValidate from '../lib/integrity'
 
 export default function Index() {
 
@@ -16,6 +17,7 @@ export default function Index() {
 
   const [output, setOutput] = useState('')
   const [integrity, setIntegrity] = useState('')
+  const [integrityRes, setIntegrityRes] = useState({})
 
   const [toasts, setToasts] = useToasts()
 
@@ -99,9 +101,9 @@ export default function Index() {
     }
   }
 
-  const handleIntegrity = (useGPU) => {
+  const handleIntegrity = () => {
     if (integrity) {
-
+      console.log(integrityValidate(output))
     } else {
       setToasts({type:'warning', text:'Nothing to Test!'})
     }
@@ -146,17 +148,24 @@ export default function Index() {
         </div>
         <Spacer y={3} />
         <h3>Integrity Test: </h3>
-        <Input type="password" value={integrity} onChange={evt => setIntegrity(evt.target.value)} width="100%" placeholder="Result..." className={styles.primaryInput} />
+        <Input
+          type="password"
+          value={integrity}
+          onChange={evt => setIntegrity(evt.target.value)}
+          width="100%"
+          placeholder="Result..."
+          className={styles.primaryInput}
+        />
         <div className={styles.buttonContainer}>
           <Button icon={<Icon.Copy />} auto className={styles.primaryButton} onClick={handleCopy} type="default">Copy from Result</Button>
-          <ButtonDropdown type="secondary" className={styles.secondaryButton} >
-            <ButtonDropdown.Item main onClick={() => handleIntegrity(false)}>Run Test</ButtonDropdown.Item>
-            <ButtonDropdown.Item onClick={() => handleIntegrity(true)} type="secondary" >Run Test with GPU</ButtonDropdown.Item>
-          </ButtonDropdown>
+          <Button icon={<Icon.Zap />} onClick={handleIntegrity} type="secondary">Run Test</Button>
         </div>
         <Spacer y={2} />
         <Card>
           <h4>Results: </h4>
+          <div>
+            {integrityRes.length > 0 ? 'found!' : 'Nothing here...'}
+          </div>
         </Card>
       </div>
     </Page>
