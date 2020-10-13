@@ -116,6 +116,7 @@ export default function Index() {
       </Head>
       <div className={styles.pageHeader}>
         <h1 className={styles.pageTitle}>Sentencer🔏🤠</h1>
+        <h4 className={styles.pageSubTitle}>Password Generator | AP Computer Science Principles</h4>
         <div className={styles.pageDesc}>Made By: Sayee and Nabeel | Oct 2020</div>
       </div>
       <div className={styles.pageBody}>
