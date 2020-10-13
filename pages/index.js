@@ -103,7 +103,7 @@ export default function Index() {
 
   const handleIntegrity = () => {
     if (integrity) {
-      console.log(integrityValidate(integrity))
+      setIntegrityRes(integrityValidate(integrity))
     } else {
       setToasts({type:'warning', text:'Nothing to Test!'})
     }
@@ -164,7 +164,13 @@ export default function Index() {
         <Card>
           <h4>Results: </h4>
           <div>
-            {integrityRes.length > 0 ? 'found!' : 'Nothing here...'}
+            {integrityRes.length > 0 ?
+            
+              integrityRes.map((data, key) => (
+                <p key={key}>{data.test}</p>
+              ))
+
+            : 'Nothing here...'}
           </div>
         </Card>
       </div>
