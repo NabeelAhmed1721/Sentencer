@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Page, Input, Button, Spacer, useToasts, Card, ButtonDropdown } from '@geist-ui/react'
+import { Page, Input, Button, Spacer, useToasts, Card, Progress } from '@geist-ui/react'
 import styles from '../styles/Index.module.css'
 import { useState } from 'react'
 import * as Icon from '@geist-ui/react-icons'
@@ -166,12 +166,22 @@ export default function Index() {
           <h4>Results: </h4>
           <div>
             {integrityRes.length > 0 ?
-            
-              integrityRes.map((data, key) => (
-                <p key={key}>{data.test}</p>
-              ))
-
-            : 'Nothing here...'}
+            <div>
+              <Progress value={(() => (
+                integrityRes.filter(data => data.test.includes('✅'))).length * 20
+              )()} colors={{
+                20: '#EE0000',
+                40: '#EE9700',
+                60: '#e2ee00',
+                80: '#7fee00',
+                100: '#00eea7'
+              }} />
+              {
+                integrityRes.map((data, key) => (
+                  <p key={key}>{data.test}</p>
+                ))
+              }
+            </div> : 'Nothing here...'}
           </div>
         </Card>
       </div>
